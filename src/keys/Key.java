@@ -1,5 +1,7 @@
 package keys;
 
+import main.Runner;
+import utilities.Output;
 import values.Value;
 
 public class Key {
@@ -7,28 +9,33 @@ public class Key {
 	protected Value value;
 	protected String name;
 	
-	public String assign(Value value) {
+	public void assign(Value value) {
 		if (this.value == null) {
-			this.value = value;
-			return "You put the " + value.getName() + " in your " + name + ".";
+			if (value.canAssignTo(this)) {				
+				this.value = value;
+				Runner.removeFromRoom(value);
+				Output.print("You put the " + value.getName() + " in your " + name + ".");
+			}
 		} else {
-			return "You already have a " + value.getName() + " in your " + name + ".";
+			Output.print("You already have a " + value.getName() + " in your " + name + ".");
 		}
 	}
 
-	public String use() {
+	public void use() {
 		if (value == null) {
-			return "You have nothing in your " + name + ".";
+			Output.print("You have nothing in your " + name + ".");
 		} else {
-			return value.use();
+			value.use();
 		}
 	}
 	
-	public String remove() {
+	public void remove() {
 		if (value == null) {
-			return "You have nothing in your " + name + ".";
+			Output.print("You have nothing in your " + name + ".");
 		} else {
-			return "You remove the " + value.getName() + " from your " + name + ".";
+			Output.print("You remove the " + value.getName() + " from your " + name + ".");
+			Runner.addToRoom(value);
+			value = null;
 		}
 	}
 	
