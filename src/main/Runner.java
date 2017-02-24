@@ -16,6 +16,8 @@ public class Runner {
 	private static List<Value> room = new ArrayList<Value>();
 	private static List<Key> keys = new ArrayList<Key>();
 	
+	private static boolean firstList = true;
+	
 	public static List<Value> getRoom() {
 		return new ArrayList<Value>(room);
 	}
@@ -36,20 +38,31 @@ public class Runner {
 		// TODO Auto-generated method stub
 		keys.add(new RightHand());
 		room.add(new Marble());
+		
+		firstList = true;
+		
 		playGame();
 	}
 
 	private static void playGame() {
-		Output.print("Welcome to [HM]"
-		 + "\nYou are an elite computer scientist in the year 20XX. Your life in the outside world is comfortable, yet modest."
-		 + "\nToday, as fortune would have it, you've become locked in a mysterious room."
+		Output.print("Welcome to [HM]");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		Output.print("You are an elite computer scientist in the year 20XX."
+		 + "\nYour mastery over your proffesion is like none other, and not in the least because you've had no one else to compare it to."
+		 + "\nToday, as fortune would have it, you've become locked in an unfamiliar room. The sole exit: a mysteriously locked door."
+		 + "\nThe scenario strikes you as an extremely clichéd turn of events, but you ponder it no further."
 		 + "\nType HELP to get the list of commands.");
 		String input = getInput();
 		while (!input.equals("HELP")) {
 			Output.print("You must type HELP to continue.");
 			input = getInput();
 		}
-		Output.print("As you are a self-proclaimed elite computer scientist, you only type in commands in ALL CAPS.");
+		Output.print("As you are a self-proclaimed master computer scientist, you only type commands in ALL CAPS."
+				+ "\nYou are fairly certain all professional programmers TYPE LIKE THIS.");
 		help();
 		while (true) {
 			input = getInput();
@@ -148,35 +161,39 @@ public class Runner {
 			}
 		}
 		if (value == null) {
-			Output.print("There is no \"" + valueName + "\" value in the room right now. Use the CHECK SURROUNDINGS command to see what is around you."
-			 + "\nAlternatively, use the LIST command to check what you have in your inventory right now.");
+			Output.print("There is no \"" + valueName + "\" value in the room right now. Use the CHECK SURROUNDINGS command to see what is around you.");
 		}
 		return value;
 	}
 	
 	private static void help() {
 		Output.print("Here are some templates to guide your commands:"
+		 + "\n	LIST"
 		 + "\n	CHECK SURROUNDINGS"
 		 + "\n	CHECK [value]"
 		 + "\n	ASSIGN [value] TO [key]"
 		 + "\n	USE FROM [key]"
-		 + "\n	REMOVE FROM [key]"
-		 + "\n	LIST");
+		 + "\n	REMOVE FROM [key]");
 	}
 	
 	private static void checkSurroundings() {
-		Output.print("Currently, the room you're in consists of the following values:");
+		Output.print("Currently, the room you are in contains the following values:");
 		for (Value v: room) {
 			Output.print("	" + v.getName());
 		}		
 	}
 	
 	private static void list() {
-		Output.print("Your inventory, as written by [key] --- [value]:");
+		if (firstList) {
+			Output.print("Like any normal human being, you will only be able to USE items stored in your inventory."
+					+ "\nUse the \"ASSIGN [value] TO [key]\" command to put values in your possession.");
+			firstList = false;
+		}
+		Output.print("Your current inventory, as written by [key] --- [value]:");
 		for (Key k: keys) {
 			Value v = k.getValue();
 			if (v == null) {
-				Output.print("	" + k.getName() + " --- NULL");
+				Output.print("	" + k.getName() + " --- N/A");
 			} else {				
 				Output.print("	" + k.getName() + " --- " + k.getValue().getName());
 			}

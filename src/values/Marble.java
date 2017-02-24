@@ -17,7 +17,8 @@ public class Marble extends Value {
 	@Override
 	public void check() {
 		Output.print("It appears to be an ordinary, green marble."
-				+ "\n...You wonder what a nice speciment like this is doing here, lying out in the open.");
+				+ "\nYou wonder what a nice speciment like this is doing here, lying out in the open."
+				+ "\nIt's almost a crime to leave such a beauty just sitting here.");
 	}
 
 }
