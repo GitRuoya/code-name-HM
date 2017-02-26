@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import keys.Key;
-import keys.RightHand;
+import keys.Pocket;
+import keys.Hand;
 import utilities.Output;
+import values.DoorKnob;
 import values.Marble;
 import values.Value;
 
@@ -16,7 +18,10 @@ public class Runner {
 	private static List<Value> room = new ArrayList<Value>();
 	private static List<Key> keys = new ArrayList<Key>();
 	
-	private static boolean firstList = true;
+	//Booleans that indicate whether it is the first time you tried something.
+	private static boolean firstList;
+	public static boolean firstAssign;
+	public static boolean firstTryUseContainer;
 	
 	public static List<Value> getRoom() {
 		return new ArrayList<Value>(room);
@@ -36,10 +41,16 @@ public class Runner {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		keys.add(new RightHand());
+		keys.add(new Hand("RIGHT_HAND"));
+		keys.add(new Hand("LEFT_HAND"));
+		keys.add(new Pocket());
+		
 		room.add(new Marble());
+		room.add(new DoorKnob());
 		
 		firstList = true;
+		firstAssign = true;
+		firstTryUseContainer = true;
 		
 		playGame();
 	}
@@ -72,6 +83,9 @@ public class Runner {
 					list();
 				} else if (input.equals("HELP")) {
 					help();
+				} else if (input.equals("QUIT")) {
+					Output.print("Goodbye.");
+					System.exit(0);
 				} else {
 					Output.print("Invalid command.");
 				}

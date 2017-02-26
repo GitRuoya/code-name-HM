@@ -10,7 +10,7 @@ public class Marble extends Value {
 	
 	@Override
 	public void use() {
-		Output.print("You toy around with the marble in your hand."
+		Output.print("You toy around with the " + name + " in your hand."
 				+ "\nThe glassy surface is both smooth and round.");
 	}
 

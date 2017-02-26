@@ -14,10 +14,17 @@ public class Key {
 			if (value.canAssignTo(this)) {				
 				this.value = value;
 				Runner.removeFromRoom(value);
-				Output.print("You put the " + value.getName() + " in your " + name + ".");
+				if (Runner.firstAssign) {
+					Output.print("You put the " + value.getName() + " in your " + name + "."
+							+ "\nWhile it is in your " + name + ", you will only be able to access it via said " + name + "."
+							+ "\nIf you'd like to use a different key on it, you can REMOVE it from this key.");
+					Runner.firstAssign = false;
+				} else {					
+					Output.print("You put the " + value.getName() + " in your " + name + ".");
+				}
 			}
 		} else {
-			Output.print("You already have a " + value.getName() + " in your " + name + ".");
+			Output.print("You already have the " + value.getName() + " in your " + name + ".");
 		}
 	}
 
