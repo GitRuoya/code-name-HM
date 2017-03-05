@@ -10,9 +10,20 @@ public class DoorKnob extends Value {
 	private boolean unlocked;
 	
 	public DoorKnob() {
+		super();
 		firstAttemptBreak = true;
 		unlocked = false;
+	}
+	
+	@Override
+	protected void setName() {
 		name = "DOOR_KNOB";
+	}
+	
+	@Override
+	protected void setCheckText() {
+		checkText = "A sleek, wooden door knob is fixed to the only door in the room."
+				+ "\nIf you intend on escaping, you are going to need a find a way to unlock it.";
 	}
 	
 	@Override
@@ -39,12 +50,6 @@ public class DoorKnob extends Value {
 		} else {
 			//TODO: Insert cryptic end game message.  :o
 		}
-	}
-
-	@Override
-	public void check() {
-		Output.print("A sleek, wooden door knob is fixed on the only door in the room."
-				+ "\nIf you intend on escaping, you are going to need a find a way to unlock it.");
 	}
 	
 }
