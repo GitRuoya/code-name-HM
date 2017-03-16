@@ -8,6 +8,7 @@ import keys.Pocket;
 import keys.Hand;
 import utilities.Output;
 import values.DoorKnob;
+import values.Hat;
 import values.Marble;
 import values.Value;
 
@@ -32,11 +33,20 @@ public class Runner {
 	}
 	
 	public static void removeFromRoom(Value v) {
-		if (room.contains(v)) {			
-			room.remove(v);
-		} else {
-			throw new RuntimeException();
+		room.remove(v);
+	}
+	
+	public static Key findKeyWithValue(Value v) {
+		for (Key k: keys) {
+			if (k.getValue() == v) {
+				return k;
+			}
 		}
+		return null;
+	}
+	
+	public static void addToKeys(Key k) {
+		keys.add(k);
 	}
 	
 	public static void main(String[] args) {
@@ -47,6 +57,7 @@ public class Runner {
 		
 		room.add(new Marble());
 		room.add(new DoorKnob());
+		room.add(new Hat());
 		
 		firstList = true;
 		firstAssign = true;
@@ -119,7 +130,6 @@ public class Runner {
 			Value value = findValue(valueName);			
 			if (value != null) {
 				key.assign(value);
-				//Printer.print(key.assign(value));
 			}
 		}
 	}

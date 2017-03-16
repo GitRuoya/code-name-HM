@@ -2,7 +2,7 @@ package utilities;
 
 public class Output {
 
-	private static boolean quickPrint = true;
+	private static boolean quickPrint = false;
 	
 	public static void print(String text) {
 		if (quickPrint) {
