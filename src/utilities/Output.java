@@ -2,27 +2,30 @@ package utilities;
 
 public class Output {
 
-	private static boolean quickPrint = false;
-	
+	private static boolean quickPrint = true;
+
 	public static void print(String text) {
 		if (quickPrint) {
 			System.out.println(text);
-		} else {			
-			for (char s: text.toCharArray()) {
-				System.out.print(s);
-				try {
+		} else {
+			try {
+				Thread.sleep(200);
+				for (char s : text.toCharArray()) {
+					System.out.print(s);
 					if (s == ' ') {
 						Thread.sleep(0);
-					} else {					
-						Thread.sleep(17);
+					} else if (s == '\n') {
+						Thread.sleep(300);
+					} else {
+						Thread.sleep(22);
 					}
-				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 			System.out.println();
 		}
 	}
-	
+
 }

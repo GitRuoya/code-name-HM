@@ -13,15 +13,8 @@ public class Key {
 		if (this.value == null) {
 			if (value.canAssignTo(this)) {				
 				this.value = value;
-				Runner.removeFromRoom(value);
-				if (Runner.firstAssign) {
-					Output.print("You put the " + value.getName() + " in your " + name + "."
-							+ "\nWhile it is in your " + name + ", you will only be able to access it via said key."
-							+ "\nIn addition, the USE command will allow you to interact with any object in your hands.");
-					Runner.firstAssign = false;
-				} else {					
-					Output.print("You put the " + value.getName() + " in your " + name + ".");
-				}
+				Runner.removeFromRoom(value);					
+				Output.print("You put the " + value.getName() + " in your " + name + ".");
 			}
 		} else {
 			Output.print("You already have the " + this.value.getName() + " in your " + name + ".");

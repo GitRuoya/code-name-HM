@@ -20,9 +20,10 @@ public class Runner {
 	private static List<Key> keys = new ArrayList<Key>();
 	
 	//Booleans that indicate whether it is the first time you tried something.
-	private static boolean firstList;
-	public static boolean firstAssign;
-	public static boolean firstTryUseContainer;
+	//Note that if it is initialized as false, it should cause the event usually triggered by it to not occur at all.
+	private static boolean firstList = true;
+	private static boolean firstCheckSurroundings = true;
+	public static boolean firstTryUseContainer = false;
 	
 	public static List<Value> getRoom() {
 		return new ArrayList<Value>(room);
@@ -59,10 +60,6 @@ public class Runner {
 		room.add(new DoorKnob());
 		room.add(new Hat());
 		
-		firstList = true;
-		firstAssign = true;
-		firstTryUseContainer = true;
-		
 		playGame();
 	}
 
@@ -85,7 +82,23 @@ public class Runner {
 		}
 		Output.print("As you are a self-proclaimed master computer scientist, you only type commands in ALL CAPS."
 				+ "\nYou are fairly certain all professional programmers TYPE LIKE THIS.");
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		help();
+		Output.print("Try using the LIST command to check your inventory.");
+		input = getInput();
+		while (!input.equals("LIST")) {
+			if (!input.equals(input.toUpperCase())) {
+				Output.print("You are a MASTER PROGRAMMER, and know better than to try typing in lower case.");
+			} else {				
+				Output.print("That is not the LIST command!");
+			}
+			input = getInput();
+		}
+		list();
 		while (true) {
 			input = getInput();
 			String[] inputParts = input.split(" ");
@@ -101,9 +114,9 @@ public class Runner {
 					Output.print("Invalid command.");
 				}
 			} else if (inputParts.length == 2) {
-				if (input.equals("CHECK SURROUNDINGS")) {
+				if (input.equals("LOOK AROUND")) {
 					checkSurroundings();
-				} else if (inputParts[0].equals("CHECK")) {
+				} else if (inputParts[0].equals("INSPECT")) {
 					check(inputParts[1]);
 				} else {
 					Output.print("Invalid command.");
@@ -185,7 +198,7 @@ public class Runner {
 			}
 		}
 		if (value == null) {
-			Output.print("There is no \"" + valueName + "\" value in the room right now. Use the CHECK SURROUNDINGS command to see what is around you.");
+			Output.print("There is no \"" + valueName + "\" value in the room right now. Use the LOOK AROUND command to inspect your surroundings.");
 		}
 		return value;
 	}
@@ -193,8 +206,8 @@ public class Runner {
 	private static void help() {
 		Output.print("Here are some templates to guide your commands:"
 		 + "\n	LIST"
-		 + "\n	CHECK SURROUNDINGS"
-		 + "\n	CHECK [value]"
+		 + "\n	LOOK AROUND"
+		 + "\n	INSPECT [value]"
 		 + "\n	ASSIGN [value] TO [key]"
 		 + "\n	USE FROM [key]"
 		 + "\n	REMOVE FROM [key]");
@@ -204,12 +217,15 @@ public class Runner {
 		Output.print("Currently, the room you are in contains the following values:");
 		for (Value v: room) {
 			Output.print("	" + v.getName());
-		}		
+		}
+		if (firstCheckSurroundings) {
+			Output.print("Use the \"INSPECT [value]\" command to check any of the aforementioned objects.");
+		}
 	}
 	
 	private static void list() {
 		if (firstList) {
-			Output.print("Like any normal human being, you will only be able to USE items stored in your inventory."
+			Output.print("You will only be able to act upon items stored in your inventory."
 					+ "\nUse the \"ASSIGN [value] TO [key]\" command to put values in your possession.");
 			firstList = false;
 		}
