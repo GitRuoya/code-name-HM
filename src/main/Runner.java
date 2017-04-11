@@ -7,6 +7,7 @@ import keys.Key;
 import keys.Pocket;
 import keys.Hand;
 import utilities.Output;
+import utilities.Parser;
 import values.DoorKnob;
 import values.Hat;
 import values.Marble;
@@ -52,13 +53,17 @@ public class Runner {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		keys.add(new Hand("RIGHT_HAND"));
-		keys.add(new Hand("LEFT_HAND"));
+		keys.add(new Hand("RIGHT HAND"));
+		keys.add(new Hand("LEFT HAND"));
 		keys.add(new Pocket());
 		
 		room.add(new Marble());
 		room.add(new DoorKnob());
 		room.add(new Hat());
+		
+		if (args.length == 1 && args[0].equals("debug")) {
+			Output.setQuickPrint(true);
+		}
 		
 		playGame();
 	}
@@ -92,7 +97,7 @@ public class Runner {
 		input = getInput();
 		while (!input.equals("LIST")) {
 			if (!input.equals(input.toUpperCase())) {
-				Output.print("You are a MASTER PROGRAMMER, and know better than to try typing in lower case.");
+				Output.print("You are a MASTER PROGRAMMER, and know better than to try typing in lower case!");
 			} else {				
 				Output.print("That is not the LIST command!");
 			}
@@ -102,6 +107,7 @@ public class Runner {
 		while (true) {
 			input = getInput();
 			String[] inputParts = input.split(" ");
+			
 			if (inputParts.length == 1) {
 				if (input.equals("LIST")) {
 					list();
@@ -113,26 +119,46 @@ public class Runner {
 				} else {
 					Output.print("Invalid command.");
 				}
-			} else if (inputParts.length == 2) {
+			} else {
 				if (input.equals("LOOK AROUND")) {
 					checkSurroundings();
-				} else if (inputParts[0].equals("INSPECT")) {
-					check(inputParts[1]);
 				} else {
-					Output.print("Invalid command.");
+					boolean valid = false;
+					
+					String[] args = Parser.getArgs(input, "INSPECT");
+					if (args != null) {
+						valid = true;
+						check(args[0]);
+					}
+					
+					if (!valid) {
+						args = Parser.getArgs(input, "ASSIGN", "TO");
+						if (args != null) {
+							valid = true;
+							assign(args[0], args[1]);
+						}
+					}
+					
+					if (!valid) {
+						args = Parser.getArgs(input, "USE", "FROM");
+						if (args != null) {
+							valid = true;
+							use(args[1]);
+						}
+					}
+					
+					if (!valid) {
+						args = Parser.getArgs(input, "REMOVE", "FROM");
+						if (args != null) {
+							valid = true;
+							remove(args[1]);
+						}
+					}
+					
+					if (!valid) {						
+						Output.print("Invalid command.");
+					}
 				}
-			} else if (inputParts.length == 3) {
-				if (inputParts[0].equals("USE") && inputParts[1].equals("FROM")) {
-					use(inputParts[2]);
-				} else if (inputParts[0].equals("REMOVE") && inputParts[1].equals("FROM")) {
-					remove(inputParts[2]);
-				} else {
-					Output.print("Invalid command.");
-				}
-			} else if (inputParts.length == 4 && inputParts[0].equals("ASSIGN") && inputParts[2].equals("TO")) {
-				assign(inputParts[1], inputParts[3]);
-			} else {
-				Output.print("Invalid command.");
 			}
 		}
 	}
@@ -243,5 +269,5 @@ public class Runner {
 	private static String getInput() {
 		return sc.nextLine();
 	}
-	
+		
 }

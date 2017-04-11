@@ -17,7 +17,7 @@ public class DoorKnob extends Value {
 	
 	@Override
 	protected void setName() {
-		name = "DOOR_KNOB";
+		name = "DOOR KNOB";
 	}
 	
 	@Override

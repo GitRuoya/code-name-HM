@@ -23,6 +23,14 @@ public class Hat extends Value {
 				+ "\nWhile it sits atop your head, it functions as a KEY rather than a VALUE."
 				+ "\nHence, your " + name + " now effectively acts as another container.");
 		Runner.findKeyWithValue(this).remove();
+		Runner.removeFromRoom(this);
+		try {
+			System.gc();
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Runner.addToKeys(new KeyHat());
 	}
 
