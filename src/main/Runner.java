@@ -9,6 +9,7 @@ import keys.Hand;
 import utilities.Output;
 import utilities.Parser;
 import values.DoorKnob;
+import values.Drawer;
 import values.Hat;
 import values.Marble;
 import values.Value;
@@ -28,6 +29,10 @@ public class Runner {
 	
 	public static List<Value> getRoom() {
 		return new ArrayList<Value>(room);
+	}
+	
+	public static boolean roomContains(Value v) {
+		return room.contains(v);
 	}
 	
 	public static void addToRoom(Value v) {
@@ -52,14 +57,16 @@ public class Runner {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		keys.add(new Hand("RIGHT HAND"));
 		keys.add(new Hand("LEFT HAND"));
 		keys.add(new Pocket());
 		
-		room.add(new Marble());
 		room.add(new DoorKnob());
-		room.add(new Hat());
+		room.add(new Marble());
+		List<Value> drawerContents = new ArrayList<Value>();
+		drawerContents.add(new Hat());
+		// TODO: Add more values to this drawer.
+		room.add(new Drawer(drawerContents));
 		
 		if (args.length == 1 && args[0].equals("debug")) {
 			Output.setQuickPrint(true);
@@ -141,7 +148,7 @@ public class Runner {
 					
 					if (!valid) {
 						args = Parser.getArgs(input, "USE", "FROM");
-						if (args != null) {
+						if (args != null && args[0].equals("")) {
 							valid = true;
 							use(args[1]);
 						}
@@ -149,7 +156,7 @@ public class Runner {
 					
 					if (!valid) {
 						args = Parser.getArgs(input, "REMOVE", "FROM");
-						if (args != null) {
+						if (args != null && args[0].equals("")) {
 							valid = true;
 							remove(args[1]);
 						}
@@ -215,7 +222,7 @@ public class Runner {
 	private static Value findValue (String valueName) {
 		Value value = null;
 		for (Value v: room) {
-			if (v.getName().equals(valueName)) {
+			if (v.name().equals(valueName)) {
 				if (value == null) {
 					value = v;
 				} else {
@@ -242,10 +249,11 @@ public class Runner {
 	private static void checkSurroundings() {
 		Output.print("Currently, the room you are in contains the following values:");
 		for (Value v: room) {
-			Output.print("	" + v.getName());
+			Output.print("	" + v.name());
 		}
 		if (firstCheckSurroundings) {
 			Output.print("Use the \"INSPECT [value]\" command to check any of the aforementioned objects.");
+			firstCheckSurroundings = false;
 		}
 	}
 	
@@ -261,7 +269,7 @@ public class Runner {
 			if (v == null) {
 				Output.print("	" + k.getName() + " --- N/A");
 			} else {				
-				Output.print("	" + k.getName() + " --- " + k.getValue().getName());
+				Output.print("	" + k.getName() + " --- " + k.getValue().name());
 			}
 		}
 	}

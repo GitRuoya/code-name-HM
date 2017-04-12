@@ -23,7 +23,6 @@ public class Output {
 					} else {
 						Thread.sleep(22);
 					}
-					// TODO Auto-generated catch block
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
