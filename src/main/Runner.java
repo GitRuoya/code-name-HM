@@ -8,6 +8,7 @@ import keys.Pocket;
 import keys.Hand;
 import utilities.Output;
 import utilities.Parser;
+import values.Badge;
 import values.DoorKnob;
 import values.Drawer;
 import values.Hat;
@@ -65,6 +66,7 @@ public class Runner {
 		room.add(new Marble());
 		List<Value> drawerContents = new ArrayList<Value>();
 		drawerContents.add(new Hat());
+		drawerContents.add(new Badge());
 		// TODO: Add more values to this drawer.
 		room.add(new Drawer(drawerContents));
 		
