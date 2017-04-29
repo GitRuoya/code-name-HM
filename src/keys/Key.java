@@ -14,10 +14,10 @@ public class Key {
 			if (value.canAssignTo(this)) {				
 				this.value = value;
 				Runner.removeFromRoom(value);					
-				Output.print("You put the " + value.name() + " in your " + name + ".");
+				Output.print("You put the " + value.getName() + " in your " + name + ".");
 			}
 		} else {
-			Output.print("You already have the " + this.value.name() + " in your " + name + ".");
+			Output.print("You already have the " + this.value.getName() + " in your " + name + ".");
 		}
 	}
 
@@ -33,7 +33,7 @@ public class Key {
 		if (value == null) {
 			Output.print("You have nothing in your " + name + ".");
 		} else {
-			Output.print("You remove the " + value.name() + " from your " + name + ".");
+			Output.print("You remove the " + value.getName() + " from your " + name + ".");
 			Runner.addToRoom(value);
 			value = null;
 		}

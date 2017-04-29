@@ -222,7 +222,7 @@ public class Runner {
 	private static Value findValue (String valueName) {
 		Value value = null;
 		for (Value v: room) {
-			if (v.name().equals(valueName)) {
+			if (v.getName().equals(valueName)) {
 				if (value == null) {
 					value = v;
 				} else {
@@ -249,7 +249,7 @@ public class Runner {
 	private static void checkSurroundings() {
 		Output.print("Currently, the room you are in contains the following values:");
 		for (Value v: room) {
-			Output.print("	" + v.name());
+			Output.print("	" + v.getName());
 		}
 		if (firstCheckSurroundings) {
 			Output.print("Use the \"INSPECT [value]\" command to check any of the aforementioned objects.");
@@ -269,7 +269,7 @@ public class Runner {
 			if (v == null) {
 				Output.print("	" + k.getName() + " --- N/A");
 			} else {				
-				Output.print("	" + k.getName() + " --- " + k.getValue().name());
+				Output.print("	" + k.getName() + " --- " + k.getValue().getName());
 			}
 		}
 	}

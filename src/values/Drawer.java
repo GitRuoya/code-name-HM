@@ -27,7 +27,7 @@ public class Drawer extends Value {
 		super();
 		opened = false;
 		this.interior = interior;
-		//currInterior has to be a clone, so...
+		//currInterior has to be cloned.
 		currInterior = new ArrayList<Value>();
 		for (Value v: interior) {
 			currInterior.add(v);
@@ -36,18 +36,18 @@ public class Drawer extends Value {
 	}
 	
 	@Override
-	public String name() {
+	public String initName() {
 		return "DRAWER HANDLE";
 	}
 
 	@Override
 	protected String checkText() {
 		if (!opened) {
-			return "The "+ name() + " is affixed to a semi-custom drawer leaning against the back wall."
+			return "The "+ name + " is affixed to a semi-custom drawer leaning against the back wall."
 					+ "\nUnder the harsh light coming from the ceiling, a thin layer of dust is visible on the surface.";			
 		} else {
 			return "With the drawer opened, there seems nothing much left to do with this object."
-					+ "\nYou stop and consider why you even bothered to INSPECT the " + name() + " now that you've already USED it.";
+					+ "\nYou stop and consider why you even bothered to INSPECT the " + name + " now that you've already USED it.";
 		}
 	}
 	
@@ -56,7 +56,7 @@ public class Drawer extends Value {
 		if (k instanceof Hand) {
 			return true;
 		} else {
-			Output.print("The "+ name() + " is screwed onto the drawer, and refuses to be placed in your " + k.getName() + ".");
+			Output.print("The "+ name + " is screwed onto the drawer, and refuses to be placed in your " + k.getName() + ".");
 			return false;
 		}
 	}
@@ -70,14 +70,14 @@ public class Drawer extends Value {
 				if (currInterior.contains(v)) {
 					Runner.addToRoom(v);
 					currInterior.remove(v);
-					values = values + ", " + v.name();
+					values = values + ", " + v.getName();
 					numItems++;
 				}
 			} else {
 				if (Runner.roomContains(v)) {
 					Runner.removeFromRoom(v);
 					currInterior.add(v);
-					values = values + ", " + v.name();
+					values = values + ", " + v.getName();
 					numItems++;
 				}
 			}

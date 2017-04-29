@@ -5,7 +5,7 @@ import utilities.Output;
 public class Marble extends Value {
 
 	@Override
-	public String name() {
+	public String initName() {
 		return "MARBLE";
 	}
 
@@ -18,7 +18,7 @@ public class Marble extends Value {
 	
 	@Override
 	public void use() {
-		Output.print("You toy around with the " + name() + " in your hand."
+		Output.print("You toy around with the " + name + " in your hand."
 				+ "\nThe glassy surface is both smooth and round.");
 	}
 

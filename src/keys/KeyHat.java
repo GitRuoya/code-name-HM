@@ -16,7 +16,7 @@ public class KeyHat extends Key {
 		} else {			
 			if (Runner.firstTryUseContainer) {			
 				Output.print("Your " + name + " is a container. You cannot \"USE\" anything from within it."
-						+ "\nInstead, it may be advisable to assign the " + value.name() + " to one of your other keys, instead.");
+						+ "\nInstead, it may be advisable to assign the " + value.getName() + " to one of your other keys, instead.");
 				Runner.firstTryUseContainer = false;
 			} else {
 				Output.print("No matter how hard you try, you will be unable to USE anything from your " + name + ".");

@@ -16,7 +16,7 @@ public class DoorKnob extends Value {
 	}
 	
 	@Override
-	public String name() {
+	public String initName() {
 		return "DOOR KNOB";
 	}
 	
@@ -31,7 +31,7 @@ public class DoorKnob extends Value {
 		if (k instanceof Hand) {
 			return true;
 		} else {
-			Output.print("The " + name() + " is fastened to the door, and refuses to be placed in your " + k.getName() + ".");
+			Output.print("The " + name + " is fastened to the door, and refuses to be placed in your " + k.getName() + ".");
 			return false;
 		}
 	}
@@ -41,11 +41,11 @@ public class DoorKnob extends Value {
 		if (!unlocked) {
 			if (firstAttemptBreak) {				
 				Output.print("You attempt to open the EXIT DOOR. However it is locked."
-						+ "\nIt appears that no matter how much you twist and attack the " + name() + ", the door shall remain immobile.");
+						+ "\nIt appears that no matter how much you twist and attack the " + name + ", the door shall remain immobile.");
 				firstAttemptBreak = false;
 			} else {
 				Output.print("Your continued attempts to break open the locked door yields no success."
-						+ "\nYou wouldn't want to break the " + name() + " off and have it become a recurring motif, would you?");
+						+ "\nYou wouldn't want to break the " + name + " off and have it become a recurring motif, would you?");
 			}
 		} else {
 			//TODO: Insert cryptic end game message.  :o
