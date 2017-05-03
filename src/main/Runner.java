@@ -9,6 +9,7 @@ import keys.Hand;
 import utilities.Output;
 import utilities.Parser;
 import values.Badge;
+import values.Coin;
 import values.DoorKnob;
 import values.Drawer;
 import values.Hat;
@@ -67,7 +68,7 @@ public class Runner {
 		List<Value> drawerContents = new ArrayList<Value>();
 		drawerContents.add(new Hat());
 		drawerContents.add(new Badge());
-		// TODO: Add more values to this drawer.
+		drawerContents.add(new Coin());
 		room.add(new Drawer(drawerContents));
 		
 		if (args.length == 1 && args[0].equals("debug")) {
