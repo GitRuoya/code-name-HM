@@ -43,7 +43,7 @@ public class Drawer extends Value {
 	@Override
 	protected String checkText() {
 		if (!opened) {
-			return "The "+ name + " is affixed to a semi-custom drawer leaning against the back wall."
+			return "The drawer handle is affixed to a semi-custom drawer leaning against the back wall."
 					+ "\nUnder the harsh light coming from the ceiling, a thin layer of dust is visible on the surface.";			
 		} else {
 			return "With the drawer opened, there seems nothing much left to do with this object."

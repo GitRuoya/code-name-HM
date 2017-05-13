@@ -2,6 +2,7 @@ package utilities;
 
 public class Output {
 
+	private static int defaultBuffer = 22;
 	private static boolean quickPrint = false;
 
 	public static void setQuickPrint(boolean qp) {
@@ -9,6 +10,14 @@ public class Output {
 	}
 	
 	public static void print(String text) {
+		print(text, defaultBuffer);
+	}
+	
+	public static void setDefaultBuffer(int bufferTime) {
+		defaultBuffer = bufferTime;
+	}
+	
+	private static void print(String text, int bufferTime) {
 		if (quickPrint) {
 			System.out.println(text);
 		} else {
@@ -21,7 +30,7 @@ public class Output {
 					} else if (s == '\n') {
 						Thread.sleep(300);
 					} else {
-						Thread.sleep(22);
+						Thread.sleep(bufferTime);
 					}
 				}
 			} catch (InterruptedException e) {

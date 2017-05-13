@@ -14,6 +14,7 @@ import values.DoorKnob;
 import values.Drawer;
 import values.Hat;
 import values.Marble;
+import values.Switch;
 import values.Value;
 
 public class Runner {
@@ -65,6 +66,7 @@ public class Runner {
 		
 		room.add(new DoorKnob());
 		room.add(new Marble());
+		room.add(new Switch());
 		List<Value> drawerContents = new ArrayList<Value>();
 		drawerContents.add(new Hat());
 		drawerContents.add(new Badge());

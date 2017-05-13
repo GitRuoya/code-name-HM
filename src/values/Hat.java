@@ -13,7 +13,7 @@ public class Hat extends Value {
 	
 	@Override
 	protected String checkText() {
-		return "A high-crowned, wide-brimmed "+ name + " of audacious reputation."
+		return "A high-crowned, wide-brimmed hat of audacious reputation."
 				+ "\nYou recognize it to be your very own. The familiar, well-worn edges beckon.";
 	}
 	

@@ -53,7 +53,7 @@ public class Coin extends Value {
 
 	@Override
 	protected String checkText() {
-		return "A single " + name + " lies in your view. It glitters with the mysteries of foreign currency."
+		return "A single coin lies in your view. It glitters with the mysteries of foreign currency."
 				+ "\nLooking at its awesome luster, and you cannot help but feel tempted by the cruelest disease of the soul.";
 	}
 
