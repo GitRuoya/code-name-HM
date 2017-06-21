@@ -21,9 +21,8 @@ public class KeyHat extends Key {
 				this.value = value;
 				Runner.removeFromRoom(value);
 				if (!hasTriedBadge) {
-					Output.print("You pin the " + value.getName() + " to your " + name + ", and..."
-							+ "\nWhoa. Whoa whoa whoa."
-							+ "\nThis is incredible! YOU are incredible."
+					Output.print("You proceed pin the " + value.getName() + " to your hat WHEN SUDDENLY."
+							+ "\nSuddenly."
 							+ "\nWith the " + value.getName() + " on your hat, your FASHION POINTS skyrockets!"
 							+ "\nThe cowboy cosplay you never realized you had SOARS in VERISIMILITUDE."
 							+ "\nYou rename your trusty hat the COWBOY HAT in celebration of this magnificent success.");

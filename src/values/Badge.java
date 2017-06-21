@@ -8,7 +8,6 @@ public class Badge extends Value {
 	private boolean firstUse;
 	
 	public Badge() {
-		super();
 		firstCheck = true;
 		firstUse = true;
 	}
@@ -17,7 +16,7 @@ public class Badge extends Value {
 	public void use() {
 		if (firstUse) {			
 			Output.print("The pin on the back of the " + name + " is too dull to be of good use."
-						   + "\nThe tip most likely has worn with wear. Hang on, what? Pins don't \"wear out.\"");
+						   + "\nThe tip most likely has worn with wear. Hang on, what? Pins don't just \"wear out.\"");
 			firstUse = false;
 		} else {
 			Output.print("On further consideration, it seems like the pin on the back was switched out with a dulled one."
@@ -38,7 +37,7 @@ public class Badge extends Value {
 					+ "\nSpeaking of cowboy movies, you think still have the Rango blu-ray DVD at home."
 					+ "\nOnce you're out of this situation, maybe you can go and rewatch that. FOR THE FIFTH TIME.";
 		} else {
-			return "Rango is probably your favorite motion movie picture of all time."
+			return "You really think that Rango was a high quality motion movie picture."
 					+ "\nYou just really love the self-aware humor and plot that is going for it.";
 		}
 	}

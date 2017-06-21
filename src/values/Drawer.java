@@ -16,7 +16,6 @@ public class Drawer extends Value {
 	private boolean firstClosed;
 	
 	public Drawer() {
-		super();
 		opened = false;
 		interior = new ArrayList<Value>();
 		currInterior = new ArrayList<Value>();

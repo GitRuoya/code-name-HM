@@ -10,7 +10,6 @@ public class DoorKnob extends Value {
 	private boolean unlocked;
 	
 	public DoorKnob() {
-		super();
 		firstAttemptBreak = true;
 		unlocked = false;
 	}
