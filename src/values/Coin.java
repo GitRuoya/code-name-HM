@@ -1,5 +1,7 @@
 package values;
 
+import keys.Key;
+import keys.Oven;
 import utilities.Output;
 
 public class Coin extends Value {
@@ -17,6 +19,18 @@ public class Coin extends Value {
 		gotConsecutive = false;
 	}
 
+	@Override
+	public boolean canAssignTo(Key k) {
+		if (k instanceof Oven) {
+			Output.print("You put the " + name + " in the OVE-"
+					+ "\nHey wait a minute, what do you think you're doing? Under no circumstance does metal go in this oven!"
+					+ "\nLook, I know you want to escape, but maaaaaybe try to avoid destroying everything in an electrical fire?");
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	@Override
 	public void use() {
 		if (!gotConsecutive) {
