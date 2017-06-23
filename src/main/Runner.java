@@ -15,6 +15,7 @@ import values.Drawer;
 import values.Hat;
 import values.Marble;
 import values.OvenDoor;
+import values.Scissors;
 import values.Switch;
 import values.Value;
 
@@ -25,11 +26,14 @@ public class Runner {
 	private static List<Value> room = new ArrayList<Value>();
 	private static List<Key> keys = new ArrayList<Key>();
 	
-	//Booleans that indicate whether it is the first time you tried something.
-	//Note that if it is initialized as false, it should cause the event usually triggered by it to not occur at all.
+	// Booleans that indicate whether it is the first time you tried something.
+	// Note that if it is initialized as false, it should cause the event usually triggered by it to not occur at all.
 	private static boolean firstList = true;
 	private static boolean firstCheckSurroundings = true;
-	public static boolean firstTryUseContainer = false;
+	public static boolean firstTryUseContainer = true;
+	public static boolean firstTryElectricalFire = true;
+	// These variables are the opposite; initialized as true, and it will fail to activate.
+	public static boolean seenRopeOnOvenDoor = false;
 	
 	public static List<Value> getRoom() {
 		return new ArrayList<Value>(room);
@@ -68,11 +72,13 @@ public class Runner {
 		room.add(new DoorKnob());
 		room.add(new Marble());
 		room.add(new Switch());
-		room.add(new OvenDoor());
+		OvenDoor ovenDoor = new OvenDoor();
+		room.add(ovenDoor);
 		List<Value> drawerContents = new ArrayList<Value>();
 		drawerContents.add(new Hat());
 		drawerContents.add(new Badge());
 		drawerContents.add(new Coin());
+		drawerContents.add(new Scissors(ovenDoor));
 		room.add(new Drawer(drawerContents));
 		
 		if (args.length == 1 && args[0].equals("debug")) {

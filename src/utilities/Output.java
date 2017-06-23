@@ -2,7 +2,7 @@ package utilities;
 
 public class Output {
 
-	private static int defaultBuffer = 22;
+	private static int defaultBuffer = 24;
 	private static boolean quickPrint = false;
 
 	public static void setQuickPrint(boolean qp) {

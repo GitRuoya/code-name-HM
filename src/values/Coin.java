@@ -2,6 +2,7 @@ package values;
 
 import keys.Key;
 import keys.Oven;
+import main.Runner;
 import utilities.Output;
 
 public class Coin extends Value {
@@ -22,9 +23,14 @@ public class Coin extends Value {
 	@Override
 	public boolean canAssignTo(Key k) {
 		if (k instanceof Oven) {
-			Output.print("You put the " + name + " in the OVE-"
-					+ "\nHey wait a minute, what do you think you're doing? Under no circumstance does metal go in this oven!"
-					+ "\nLook, I know you want to escape, but maaaaaybe try to avoid destroying everything in an electrical fire?");
+			if (Runner.firstTryElectricalFire) {
+				Output.print("You put the " + name + " in the OVE-"
+						+ "\nHey wait a minute, what do you think you're doing? Under no circumstance does metal go in this oven!"
+						+ "\nLook, I know you want to escape, but maaaaaybe try to avoid destroying everything in an electrical fire?");				
+				Runner.firstTryElectricalFire = false;
+			} else {
+				Output.print("You refuse to put the " + name + " in the " + k.getName() + ".");
+			}
 			return false;
 		} else {
 			return true;
