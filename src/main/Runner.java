@@ -1,7 +1,12 @@
 package main;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import keys.Key;
 import keys.Pocket;
@@ -95,6 +100,7 @@ public class Runner {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		Output.print("You are an elite computer scientist in the year 20XX."
 		 + "\nYour mastery over your proffesion is like none other, and not in the least because you've had no one else to compare it to."
 		 + "\nToday, as fortune would have it, you've become locked in an unfamiliar room. The sole exit: a mysteriously locked door."
@@ -113,25 +119,44 @@ public class Runner {
 			e.printStackTrace();
 		}
 		help();
-		Output.print("Try using the LIST command to check your inventory.");
-		input = getInput();
-		while (!input.equals("LIST")) {
-			if (!input.equals(input.toUpperCase())) {
-				Output.print("You are a MASTER PROGRAMMER, and know better than to try typing in lower case!");
-			} else {				
-				Output.print("That is not the LIST command!");
-			}
-			input = getInput();
-		}
-		list();
+		
+		//TODO: Graphics should be moved to a different class.
+		JFrame frame = new JFrame("INVENTORY");
+		frame.setLayout(new GridLayout());
+		JLabel label = new JLabel();
+		frame.add(label);
+		frame.setVisible(true);
+		
+		label.setText(getLabelText());
+		frame.pack();
+		
+		Output.print("Above you will find your inventory listed out in a nice little graphic! It is written by [key] --- [value]."
+				+ "\nUse the \"ASSIGN [value] TO [key]\" command to put them in your possession.");
+//		Output.print("Try using the LIST command to check your inventory.");
+//		input = getInput();
+//		while (!input.equals("LIST")) {
+//			if (!input.equals(input.toUpperCase())) {
+//				Output.print("You are a MASTER PROGRAMMER, and know better than to try typing in lower case!");
+//			} else {				
+//				Output.print("That is not the LIST command!");
+//			}
+//			input = getInput();
+//		}
+//		list();
+		
 		while (true) {
+			
+			label.setText(getLabelText());
+			frame.pack();
+			
 			input = getInput();
 			String[] inputParts = input.split(" ");
 			
 			if (inputParts.length == 1) {
-				if (input.equals("LIST")) {
-					list();
-				} else if (input.equals("HELP")) {
+//				if (input.equals("LIST")) {
+//					list();
+//				} else 
+				if (input.equals("HELP")) {
 					help();
 				} else if (input.equals("QUIT")) {
 					Output.print("Goodbye.");
@@ -182,6 +207,21 @@ public class Runner {
 			}
 		}
 	}
+
+	private static String getLabelText() {
+		String labelText = "";
+		String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		
+		for (Key k: keys) {
+			Value v = k.getValue();
+			if (v == null) {
+				labelText = labelText + "<br>" + nbsp + k.getName() + " --- N/A" + nbsp;
+			} else {				
+				labelText = labelText + "<br>" + nbsp + k.getName() + " --- " + k.getValue().getName() + nbsp;
+			}
+		}
+		return "<html>" + labelText + "<br>&nbsp;</html>";
+	}
 	
 	private static void assign(String valueName, String keyName) {
 		Key key = findKey(keyName);
@@ -227,7 +267,7 @@ public class Runner {
 		}
 		if (key == null) {
 			Output.print("You have no key called \"" + keyName + "\""
-					+ "\nUse the LIST command to consult your inventory and choose a key from there.");
+					+ "\nLook at the INVENTORY window above and choose a key from there.");
 		}
 		return key;
 	}
@@ -251,7 +291,7 @@ public class Runner {
 	
 	private static void help() {
 		Output.print("Here are some templates to guide your commands:"
-		 + "\n	LIST"
+//		 + "\n	LIST"
 		 + "\n	LOOK AROUND"
 		 + "\n	INSPECT [value]"
 		 + "\n	ASSIGN [value] TO [key]"
@@ -270,6 +310,7 @@ public class Runner {
 		}
 	}
 	
+	@Deprecated
 	private static void list() {
 		if (firstList) {
 			Output.print("You will only be able to act upon items stored in your inventory."
