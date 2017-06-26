@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import keys.Key;
 import keys.Pocket;
 import keys.Hand;
+import utilities.Graphics;
 import utilities.Output;
 import utilities.Parser;
 import values.Badge;
@@ -95,11 +96,9 @@ public class Runner {
 
 	private static void playGame() {
 		Output.print("Welcome to [HM]");
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
+		Graphics.initializeWindow();
+		Graphics.update(keys, room);
 		
 		Output.print("You are an elite computer scientist in the year 20XX."
 		 + "\nYour mastery over your proffesion is like none other, and not in the least because you've had no one else to compare it to."
@@ -120,42 +119,15 @@ public class Runner {
 		}
 		help();
 		
-		//TODO: Graphics should be moved to a different class.
-		JFrame frame = new JFrame("INVENTORY");
-		frame.setLayout(new GridLayout());
-		JLabel label = new JLabel();
-		frame.add(label);
-		frame.setVisible(true);
-		
-		label.setText(getLabelText());
-		frame.pack();
-		
-		Output.print("Above you will find your inventory listed out in a nice little graphic! It is written by [key] --- [value]."
-				+ "\nUse the \"ASSIGN [value] TO [key]\" command to put them in your possession.");
-//		Output.print("Try using the LIST command to check your inventory.");
-//		input = getInput();
-//		while (!input.equals("LIST")) {
-//			if (!input.equals(input.toUpperCase())) {
-//				Output.print("You are a MASTER PROGRAMMER, and know better than to try typing in lower case!");
-//			} else {				
-//				Output.print("That is not the LIST command!");
-//			}
-//			input = getInput();
-//		}
-//		list();
-		
 		while (true) {
 			
-			label.setText(getLabelText());
-			frame.pack();
-			
+			Graphics.update(keys, room);
+
 			input = getInput();
 			String[] inputParts = input.split(" ");
 			
 			if (inputParts.length == 1) {
-//				if (input.equals("LIST")) {
-//					list();
-//				} else 
+				
 				if (input.equals("HELP")) {
 					help();
 				} else if (input.equals("QUIT")) {
@@ -164,63 +136,47 @@ public class Runner {
 				} else {
 					Output.print("Invalid command.");
 				}
+				
 			} else {
-				if (input.equals("LOOK AROUND")) {
-					checkSurroundings();
-				} else {
-					boolean valid = false;
-					
-					String[] args = Parser.getArgs(input, "INSPECT");
+			
+				boolean valid = false;
+				
+				String[] args = Parser.getArgs(input, "INSPECT");
+				if (args != null) {
+					valid = true;
+					check(args[0]);
+				}
+				
+				if (!valid) {
+					args = Parser.getArgs(input, "ASSIGN", "TO");
 					if (args != null) {
 						valid = true;
-						check(args[0]);
-					}
-					
-					if (!valid) {
-						args = Parser.getArgs(input, "ASSIGN", "TO");
-						if (args != null) {
-							valid = true;
-							assign(args[0], args[1]);
-						}
-					}
-					
-					if (!valid) {
-						args = Parser.getArgs(input, "USE", "FROM");
-						if (args != null && args[0].equals("")) {
-							valid = true;
-							use(args[1]);
-						}
-					}
-					
-					if (!valid) {
-						args = Parser.getArgs(input, "REMOVE", "FROM");
-						if (args != null && args[0].equals("")) {
-							valid = true;
-							remove(args[1]);
-						}
-					}
-					
-					if (!valid) {						
-						Output.print("Invalid command.");
+						assign(args[0], args[1]);
 					}
 				}
+				
+				if (!valid) {
+					args = Parser.getArgs(input, "USE", "FROM");
+					if (args != null && args[0].equals("")) {
+						valid = true;
+						use(args[1]);
+					}
+				}
+				
+				if (!valid) {
+					args = Parser.getArgs(input, "REMOVE", "FROM");
+					if (args != null && args[0].equals("")) {
+						valid = true;
+						remove(args[1]);
+					}
+				}
+				
+				if (!valid) {						
+					Output.print("Invalid command.");
+				}
+			
 			}
 		}
-	}
-
-	private static String getLabelText() {
-		String labelText = "";
-		String nbsp = "&nbsp;&nbsp;&nbsp;&nbsp;";
-		
-		for (Key k: keys) {
-			Value v = k.getValue();
-			if (v == null) {
-				labelText = labelText + "<br>" + nbsp + k.getName() + " --- N/A" + nbsp;
-			} else {				
-				labelText = labelText + "<br>" + nbsp + k.getName() + " --- " + k.getValue().getName() + nbsp;
-			}
-		}
-		return "<html>" + labelText + "<br>&nbsp;</html>";
 	}
 	
 	private static void assign(String valueName, String keyName) {
@@ -284,7 +240,7 @@ public class Runner {
 			}
 		}
 		if (value == null) {
-			Output.print("There is no \"" + valueName + "\" value in the room right now. Use the LOOK AROUND command to inspect your surroundings.");
+			Output.print("There is no \"" + valueName + "\" value in the room right now.");
 		}
 		return value;
 	}
@@ -292,13 +248,14 @@ public class Runner {
 	private static void help() {
 		Output.print("Here are some templates to guide your commands:"
 //		 + "\n	LIST"
-		 + "\n	LOOK AROUND"
+//		 + "\n	LOOK AROUND"
 		 + "\n	INSPECT [value]"
 		 + "\n	ASSIGN [value] TO [key]"
 		 + "\n	USE FROM [key]"
 		 + "\n	REMOVE FROM [key]");
 	}
 	
+	@Deprecated
 	private static void checkSurroundings() {
 		Output.print("Currently, the room you are in contains the following values:");
 		for (Value v: room) {

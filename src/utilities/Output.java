@@ -2,6 +2,9 @@ package utilities;
 
 public class Output {
 
+	private static final String ANSI_RESET = "\u001B[0m";
+	private static final String ANSI_BLUE = "\u001B[34m";
+	
 	private static int defaultBuffer = 24;
 	private static boolean quickPrint = false;
 
@@ -21,6 +24,7 @@ public class Output {
 		if (quickPrint) {
 			System.out.println(text);
 		} else {
+			System.out.print(ANSI_BLUE);
 			try {
 				Thread.sleep(200);
 				for (char s : text.toCharArray()) {
@@ -36,6 +40,7 @@ public class Output {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			System.out.print(ANSI_RESET);
 			System.out.println();
 		}
 	}

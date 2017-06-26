@@ -1,7 +1,5 @@
 package values;
 
-import java.util.List;
-
 import keys.Key;
 import keys.Oven;
 import main.Runner;
